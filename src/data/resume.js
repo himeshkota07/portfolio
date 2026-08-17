@@ -75,7 +75,7 @@ export const projects = [
       'Combined OCR preprocessing with regex normalisation for multi-format PDF handling',
       'Applied structured prompting to maximise classification accuracy across varied bank statement layouts',
     ],
-    link: 'https://github.com/himeshkota07',
+    link: 'https://github.com/himeshkota07/FinSight',
     featured: true,
   },
   {
