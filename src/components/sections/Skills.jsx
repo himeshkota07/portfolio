@@ -2,6 +2,7 @@ import { FiCode, FiCpu, FiDatabase, FiCloud } from 'react-icons/fi'
 import Reveal from '../Reveal'
 import SectionHeading from '../SectionHeading'
 import { skills } from '../../data/resume'
+import { skillIcons } from '../../data/skillIcons'
 
 const ICONS = {
   Languages: FiCode,
@@ -34,14 +35,21 @@ export default function Skills() {
                     <h3 className="font-display font-semibold text-lg text-[var(--color-text)]">{category}</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {list.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-xs font-mono px-3 py-1.5 rounded-full bg-white/5 text-[var(--color-text)]/85 hover:bg-white/10 transition-colors"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                    {list.map((skill) => {
+                      const entry = skillIcons[skill]
+                      const SkillIcon = entry?.icon
+                      return (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-full bg-white/5 text-[var(--color-text)]/85 hover:bg-white/10 transition-colors"
+                        >
+                          {SkillIcon && (
+                            <SkillIcon className="text-sm shrink-0" style={{ color: entry.color }} />
+                          )}
+                          {skill}
+                        </span>
+                      )
+                    })}
                   </div>
                 </div>
               </Reveal>
