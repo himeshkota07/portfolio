@@ -139,20 +139,12 @@ export default function NeuralNetwork({ pointerRef }) {
   const groupRef = useRef()
   const nodeColorAttrRef = useRef()
   const edgeColorAttrRef = useRef()
-  const { camera, viewport } = useThree()
-
-  // Size the node field off the actual viewport (world units at z=0) rather
-  // than a fixed magic number, so it reaches the edges on both an ultra-wide
-  // desktop and a narrow phone instead of looking sparse or clipped.
-  // Locked to the initial viewport so it doesn't reshuffle on every resize.
-  const radius = useMemo(() => Math.max(viewport.width, viewport.height) * 0.58, []) // eslint-disable-line react-hooks/exhaustive-deps
-  const maxLinkDist = radius * 0.27
-
   const { restPositions, nodeColors, edges, adjacency, edgePositions, edgeBaseColors } = useNetwork(
     NODE_COUNT,
-    radius,
-    maxLinkDist,
+    6.2,
+    1.7,
   )
+  const { camera, viewport } = useThree()
 
   const nodeActivation = useMemo(() => new Float32Array(NODE_COUNT), [])
   const idlePhase = useMemo(() => Float32Array.from({ length: NODE_COUNT }, () => Math.random() * Math.PI * 2), [])
