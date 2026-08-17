@@ -27,6 +27,32 @@ const certCardCls =
 
 const rowCount = Math.max(achievements.length, education.length)
 
+function AchievementCard({ a }) {
+  return (
+    <div className={cardCls}>
+      <div className="flex items-start justify-between gap-2">
+        <h4 className="font-medium text-[var(--color-text)] leading-snug">{a.title}</h4>
+        <span className="font-mono text-xs text-[var(--color-faint)] whitespace-nowrap">{a.year}</span>
+      </div>
+      <p className="text-xs mt-1" style={{ color: 'var(--color-violet)' }}>{a.org}</p>
+      <p className="text-sm text-[var(--color-muted)] mt-2 leading-relaxed">{a.description}</p>
+    </div>
+  )
+}
+
+function EducationCard({ e }) {
+  return (
+    <div className={cardCls}>
+      <h4 className="font-medium text-[var(--color-text)] leading-snug">{e.degree}</h4>
+      <p className="text-xs mt-1" style={{ color: 'var(--color-violet)' }}>{e.school}</p>
+      <div className="flex items-center justify-between mt-2">
+        <span className="text-sm text-[var(--color-muted)]">{e.detail}</span>
+        <span className="font-mono text-xs text-[var(--color-faint)]">{e.period}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function Credentials() {
   const [activeCert, setActiveCert] = useState(null)
 
@@ -35,7 +61,32 @@ export default function Credentials() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading index="05" title="Credentials" subtitle="Achievements, certifications, and education." />
 
-        <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+        {/* Mobile: each group stays together as its own header + cards. */}
+        <div className="md:hidden flex flex-col gap-10">
+          <div>
+            <ColumnHeader icon={FiAward} title="Achievements" delay={0} />
+            <div className="flex flex-col gap-4 mt-4">
+              {achievements.map((a, i) => (
+                <Reveal key={a.title} delay={0.05 * i}>
+                  <AchievementCard a={a} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+          <div>
+            <ColumnHeader icon={FiBookOpen} title="Education" delay={0} />
+            <div className="flex flex-col gap-4 mt-4">
+              {education.map((e, i) => (
+                <Reveal key={e.degree} delay={0.05 * i}>
+                  <EducationCard e={e} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: row-paired 2-column grid so matching tiles share height. */}
+        <div className="hidden md:grid md:grid-cols-2 gap-x-8 gap-y-4">
           <ColumnHeader icon={FiAward} title="Achievements" delay={0} />
           <ColumnHeader icon={FiBookOpen} title="Education" delay={0.1} />
 
@@ -46,14 +97,7 @@ export default function Credentials() {
               <Fragment key={i}>
                 {a ? (
                   <Reveal key={`a-${a.title}`} delay={0.05 * i}>
-                    <div className={cardCls}>
-                      <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-medium text-[var(--color-text)] leading-snug">{a.title}</h4>
-                        <span className="font-mono text-xs text-[var(--color-faint)] whitespace-nowrap">{a.year}</span>
-                      </div>
-                      <p className="text-xs mt-1" style={{ color: 'var(--color-violet)' }}>{a.org}</p>
-                      <p className="text-sm text-[var(--color-muted)] mt-2 leading-relaxed">{a.description}</p>
-                    </div>
+                    <AchievementCard a={a} />
                   </Reveal>
                 ) : (
                   <div key={`a-empty-${i}`} />
@@ -61,14 +105,7 @@ export default function Credentials() {
 
                 {e ? (
                   <Reveal key={`e-${e.degree}`} delay={0.05 * i + 0.1}>
-                    <div className={cardCls}>
-                      <h4 className="font-medium text-[var(--color-text)] leading-snug">{e.degree}</h4>
-                      <p className="text-xs mt-1" style={{ color: 'var(--color-violet)' }}>{e.school}</p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-sm text-[var(--color-muted)]">{e.detail}</span>
-                        <span className="font-mono text-xs text-[var(--color-faint)]">{e.period}</span>
-                      </div>
-                    </div>
+                    <EducationCard e={e} />
                   </Reveal>
                 ) : (
                   <div key={`e-empty-${i}`} />

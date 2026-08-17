@@ -36,7 +36,7 @@ export default function Contact() {
             </a>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-6">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 px-4">
             <a
               href={profile.github}
               target="_blank"
@@ -56,7 +56,7 @@ export default function Contact() {
           </div>
         </Reveal>
 
-        <div className="mt-24 pt-8 border-t border-[var(--color-line)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--color-faint)]">
+        <div className="mt-24 pt-8 border-t border-[var(--color-line)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-[var(--color-faint)] text-center sm:text-left">
           <span>© {new Date().getFullYear()} {profile.name}. All rights reserved.</span>
           <span>Built with React, Three.js &amp; Framer Motion.</span>
         </div>

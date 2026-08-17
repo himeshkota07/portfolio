@@ -18,8 +18,14 @@ export default function Hero() {
       id="home"
       className="relative min-h-[100svh] flex items-center px-6 pt-32 pb-20"
     >
-      <div className="mx-auto max-w-6xl w-full grid md:grid-cols-[1.3fr_0.9fr] gap-14 items-center">
+      <div className="mx-auto max-w-6xl w-full grid md:grid-cols-[1.3fr_0.9fr] gap-10 md:gap-14 items-center">
         <motion.div variants={container} initial="hidden" animate="show">
+          <motion.div variants={item} className="mb-6 md:hidden">
+            <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-[var(--color-line)] bg-[var(--color-panel)]/60">
+              <img src={profilePhoto} alt={profile.displayName} className="w-full h-full object-cover" />
+            </div>
+          </motion.div>
+
           <motion.div
             variants={item}
             className="inline-flex items-center gap-2 rounded-full border border-[var(--color-line)] bg-white/5 px-4 py-1.5 font-mono text-xs tracking-wide text-[var(--color-muted)] mb-7"
