@@ -8,15 +8,6 @@ const VIOLET = new THREE.Color('#a78bfa')
 const MAGENTA = new THREE.Color('#f472b6')
 
 const NODE_COUNT = 140
-const CURSOR_PLANE = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
-
-// Repulsion field tuning: how far the cursor's influence reaches, how hard
-// it pushes at point-blank range, and the spring/damping that pulls each
-// node back to its resting position once the cursor moves on.
-const REPEL_RADIUS = 1.7
-const REPEL_STRENGTH = 14
-const SPRING_K = 16
-const DAMPING = 5.5
 
 function useNetwork(count, radius, maxLinkDist) {
   return useMemo(() => {
@@ -72,12 +63,24 @@ function Links({ links }) {
   )
 }
 
+// Lit (not unlit) so the cursor comet's point light can catch these with a
+// faint glint as it drifts past — otherwise they sit at a constant low
+// opacity as ambient decor.
 function DriftingShape({ position, geometry, color, scale = 1, speed = 1 }) {
   return (
     <Float speed={speed} rotationIntensity={0.7} floatIntensity={0.8}>
       <mesh position={position} scale={scale}>
         {geometry}
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.16} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={0.15}
+          wireframe
+          transparent
+          opacity={0.22}
+          roughness={0.35}
+          metalness={0.2}
+        />
       </mesh>
     </Float>
   )
@@ -101,73 +104,15 @@ function CameraRig({ pointerRef }) {
 
 export default function NeuralNetwork({ pointerRef }) {
   const groupRef = useRef()
-  const positionAttrRef = useRef()
   const { restPositions, colorArray, links } = useNetwork(NODE_COUNT, 6.2, 1.7)
-  const { camera, viewport } = useThree()
-
-  const livePositions = useMemo(() => restPositions.slice(), [restPositions])
-  const displacement = useMemo(() => new Float32Array(NODE_COUNT * 3), [])
-  const velocity = useMemo(() => new Float32Array(NODE_COUNT * 3), [])
-
-  const raycaster = useMemo(() => new THREE.Raycaster(), [])
-  const cursorWorld = useMemo(() => new THREE.Vector3(), [])
-  const cursorLocal = useMemo(() => new THREE.Vector3(), [])
-  const ndc = useMemo(() => new THREE.Vector2(), [])
-  const toNode = useMemo(() => new THREE.Vector3(), [])
+  const { viewport } = useThree()
 
   useFrame((_, rawDelta) => {
     const group = groupRef.current
     if (!group) return
     const delta = Math.min(rawDelta, 1 / 30)
-
     group.rotation.y += delta * 0.028
     group.rotation.x += delta * 0.006
-
-    const p = pointerRef?.current ?? { x: 0, y: 0 }
-    ndc.set(p.x, p.y)
-    raycaster.setFromCamera(ndc, camera)
-    const hit = raycaster.ray.intersectPlane(CURSOR_PLANE, cursorWorld)
-    cursorLocal.copy(hit ?? cursorWorld)
-    group.worldToLocal(cursorLocal)
-
-    for (let i = 0; i < NODE_COUNT; i++) {
-      const o = i * 3
-      const rx = restPositions[o]
-      const ry = restPositions[o + 1]
-      const rz = restPositions[o + 2]
-
-      toNode.set(rx - cursorLocal.x, ry - cursorLocal.y, rz - cursorLocal.z)
-      const dist = toNode.length()
-
-      let fx = 0
-      let fy = 0
-      let fz = 0
-      if (dist < REPEL_RADIUS && dist > 0.0001) {
-        const falloff = 1 - dist / REPEL_RADIUS
-        const push = (falloff * falloff * REPEL_STRENGTH) / dist
-        fx = toNode.x * push
-        fy = toNode.y * push
-        fz = toNode.z * push
-      }
-
-      // Spring pulls the displacement back toward zero; damping settles it.
-      fx += -displacement[o] * SPRING_K - velocity[o] * DAMPING
-      fy += -displacement[o + 1] * SPRING_K - velocity[o + 1] * DAMPING
-      fz += -displacement[o + 2] * SPRING_K - velocity[o + 2] * DAMPING
-
-      velocity[o] += fx * delta
-      velocity[o + 1] += fy * delta
-      velocity[o + 2] += fz * delta
-
-      displacement[o] += velocity[o] * delta
-      displacement[o + 1] += velocity[o + 1] * delta
-      displacement[o + 2] += velocity[o + 2] * delta
-
-      livePositions[o] = rx + displacement[o]
-      livePositions[o + 1] = ry + displacement[o + 1]
-      livePositions[o + 2] = rz + displacement[o + 2]
-    }
-    if (positionAttrRef.current) positionAttrRef.current.needsUpdate = true
   })
 
   const halfW = viewport.width / 2
@@ -180,7 +125,7 @@ export default function NeuralNetwork({ pointerRef }) {
       <group ref={groupRef}>
         <points>
           <bufferGeometry>
-            <bufferAttribute ref={positionAttrRef} attach="attributes-position" args={[livePositions, 3]} />
+            <bufferAttribute attach="attributes-position" args={[restPositions, 3]} />
             <bufferAttribute attach="attributes-color" args={[colorArray, 3]} />
           </bufferGeometry>
           <pointsMaterial

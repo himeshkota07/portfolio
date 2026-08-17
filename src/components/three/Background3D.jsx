@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import NeuralNetwork from './NeuralNetwork'
+import CursorComet from './CursorComet'
 import usePointer from '../../hooks/usePointer'
 
 export default function Background3D() {
@@ -15,8 +16,10 @@ export default function Background3D() {
       >
         <color attach="background" args={['#05060a']} />
         <fog attach="fog" args={['#05060a', 6, 13]} />
+        <ambientLight intensity={0.3} />
         <Suspense fallback={null}>
           <NeuralNetwork pointerRef={pointerRef} />
+          <CursorComet pointerRef={pointerRef} />
         </Suspense>
       </Canvas>
     </div>
