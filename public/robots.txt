@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://himeshkota.onrender.com/sitemap.xml
