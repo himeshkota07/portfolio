@@ -121,10 +121,22 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="flex items-center gap-4 mt-2 px-3 pb-1">
-                <a href={profile.github} target="_blank" rel="noreferrer" className="text-[var(--color-muted)] text-lg">
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                  className="text-[var(--color-muted)] text-lg"
+                >
                   <FiGithub />
                 </a>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="text-[var(--color-muted)] text-lg">
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                  className="text-[var(--color-muted)] text-lg"
+                >
                   <FiLinkedin />
                 </a>
               </div>

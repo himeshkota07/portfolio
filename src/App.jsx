@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion'
 import Background3D from './components/three/Background3D'
 import Navbar from './components/Navbar'
 import Hero from './components/sections/Hero'
@@ -10,20 +11,24 @@ import Contact from './components/sections/Contact'
 
 function App() {
   return (
-    <div className="noise relative">
-      <Background3D />
-      <div className="fixed inset-0 z-[1] grid-overlay pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Credentials />
-        <Contact />
-      </main>
-    </div>
+    // reducedMotion="user" makes every motion.* animation in the app defer
+    // to the OS-level prefers-reduced-motion setting automatically.
+    <MotionConfig reducedMotion="user">
+      <div className="noise relative">
+        <Background3D />
+        <div className="fixed inset-0 z-[1] grid-overlay pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]" />
+        <Navbar />
+        <main className="relative z-10">
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Credentials />
+          <Contact />
+        </main>
+      </div>
+    </MotionConfig>
   )
 }
 

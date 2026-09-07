@@ -99,28 +99,35 @@ function useNetwork(count, radius, maxLinkDist) {
 // Lit (not unlit) so the cursor comet's point light can catch these with a
 // faint glint as it drifts past — otherwise they sit at a constant low
 // opacity as ambient decor.
-function DriftingShape({ position, geometry, color, scale = 1, speed = 1 }) {
+function DriftingShape({ position, geometry, color, scale = 1, speed = 1, reducedMotion }) {
+  const mesh = (
+    <mesh position={position} scale={scale}>
+      {geometry}
+      <meshStandardMaterial
+        color={color}
+        emissive={color}
+        emissiveIntensity={0.15}
+        wireframe
+        transparent
+        opacity={0.22}
+        roughness={0.35}
+        metalness={0.2}
+      />
+    </mesh>
+  )
+
+  if (reducedMotion) return mesh
+
   return (
     <Float speed={speed} rotationIntensity={0.7} floatIntensity={0.8}>
-      <mesh position={position} scale={scale}>
-        {geometry}
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={0.15}
-          wireframe
-          transparent
-          opacity={0.22}
-          roughness={0.35}
-          metalness={0.2}
-        />
-      </mesh>
+      {mesh}
     </Float>
   )
 }
 
 // Shifts the camera opposite the cursor (no lookAt re-aim) so the whole
 // scene pans like a window being peered through — a subtle depth cue.
+// Skipped entirely under prefers-reduced-motion.
 function CameraRig({ pointerRef }) {
   const { camera } = useThree()
   const target = useMemo(() => new THREE.Vector2(), [])
@@ -135,7 +142,7 @@ function CameraRig({ pointerRef }) {
   return null
 }
 
-export default function NeuralNetwork({ pointerRef }) {
+export default function NeuralNetwork({ pointerRef, reducedMotion }) {
   const groupRef = useRef()
   const nodeColorAttrRef = useRef()
   const edgeColorAttrRef = useRef()
@@ -169,8 +176,10 @@ export default function NeuralNetwork({ pointerRef }) {
     const delta = Math.min(rawDelta, 1 / 30)
     const now = state.clock.elapsedTime
 
-    group.rotation.y += delta * 0.028
-    group.rotation.x += delta * 0.006
+    if (!reducedMotion) {
+      group.rotation.y += delta * 0.028
+      group.rotation.x += delta * 0.006
+    }
 
     // Cursor -> the group's local space (same space the rest positions live in).
     const p = pointerRef?.current ?? { x: 0, y: 0 }
@@ -180,37 +189,40 @@ export default function NeuralNetwork({ pointerRef }) {
     cursorLocal.copy(hit ?? cursorWorld)
     group.worldToLocal(cursorLocal)
 
-    // Nearest node to the cursor this frame.
-    let nearest = -1
-    let nearestDist = Infinity
-    for (let i = 0; i < NODE_COUNT; i++) {
-      const dx = restPositions[i * 3] - cursorLocal.x
-      const dy = restPositions[i * 3 + 1] - cursorLocal.y
-      const dz = restPositions[i * 3 + 2] - cursorLocal.z
-      const d = dx * dx + dy * dy + dz * dz
-      if (d < nearestDist) {
-        nearestDist = d
-        nearest = i
-      }
-    }
-
-    // Cursor moved to a new "closest node" — fire a fresh ripple from it.
-    if (nearest !== lastNearestRef.current && now - cooldownRef.current > RETRIGGER_COOLDOWN) {
-      nodeActivation[nearest] = 1
-      for (const hop1 of adjacency[nearest]) {
-        pendingRef.current.push({ time: now + HOP_DELAY, node: hop1.node, strength: HOP1_STRENGTH, edge: hop1.edge })
-        for (const hop2 of adjacency[hop1.node]) {
-          if (hop2.node === nearest) continue
-          pendingRef.current.push({
-            time: now + HOP_DELAY * 2,
-            node: hop2.node,
-            strength: HOP2_STRENGTH,
-            edge: hop2.edge,
-          })
+    // Nearest node to the cursor this frame (skipped when motion is reduced,
+    // since the ripple it triggers is itself a continuous animation).
+    if (!reducedMotion) {
+      let nearest = -1
+      let nearestDist = Infinity
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const dx = restPositions[i * 3] - cursorLocal.x
+        const dy = restPositions[i * 3 + 1] - cursorLocal.y
+        const dz = restPositions[i * 3 + 2] - cursorLocal.z
+        const d = dx * dx + dy * dy + dz * dz
+        if (d < nearestDist) {
+          nearestDist = d
+          nearest = i
         }
       }
-      lastNearestRef.current = nearest
-      cooldownRef.current = now
+
+      // Cursor moved to a new "closest node" — fire a fresh ripple from it.
+      if (nearest !== lastNearestRef.current && now - cooldownRef.current > RETRIGGER_COOLDOWN) {
+        nodeActivation[nearest] = 1
+        for (const hop1 of adjacency[nearest]) {
+          pendingRef.current.push({ time: now + HOP_DELAY, node: hop1.node, strength: HOP1_STRENGTH, edge: hop1.edge })
+          for (const hop2 of adjacency[hop1.node]) {
+            if (hop2.node === nearest) continue
+            pendingRef.current.push({
+              time: now + HOP_DELAY * 2,
+              node: hop2.node,
+              strength: HOP2_STRENGTH,
+              edge: hop2.edge,
+            })
+          }
+        }
+        lastNearestRef.current = nearest
+        cooldownRef.current = now
+      }
     }
 
     // Apply any ripple hops whose delay has elapsed.
@@ -232,7 +244,7 @@ export default function NeuralNetwork({ pointerRef }) {
 
     for (let i = 0; i < NODE_COUNT; i++) {
       nodeActivation[i] *= nodeDecay
-      const idle = 0.5 + 0.5 * Math.sin(now * idleSpeed[i] + idlePhase[i])
+      const idle = reducedMotion ? 0 : 0.5 + 0.5 * Math.sin(now * idleSpeed[i] + idlePhase[i])
       const glow = Math.min(1, idle * IDLE_AMPLITUDE + nodeActivation[i])
       const o = i * 3
       liveNodeColors[o] = nodeColors[o] + (WHITE.r - nodeColors[o]) * glow
@@ -260,7 +272,7 @@ export default function NeuralNetwork({ pointerRef }) {
 
   return (
     <>
-      <CameraRig pointerRef={pointerRef} />
+      {!reducedMotion && <CameraRig pointerRef={pointerRef} />}
 
       <group ref={groupRef}>
         <points>
@@ -299,12 +311,14 @@ export default function NeuralNetwork({ pointerRef }) {
         geometry={<icosahedronGeometry args={[0.8, 0]} />}
         color="#22d3ee"
         speed={1.2}
+        reducedMotion={reducedMotion}
       />
       <DriftingShape
         position={[-halfW * 0.8, -halfH * 0.6, -3.4]}
         geometry={<octahedronGeometry args={[0.65, 0]} />}
         color="#a78bfa"
         speed={0.9}
+        reducedMotion={reducedMotion}
       />
       <DriftingShape
         position={[halfW * 0.72, -halfH * 0.68, -3.6]}
@@ -312,6 +326,7 @@ export default function NeuralNetwork({ pointerRef }) {
         color="#f472b6"
         scale={0.85}
         speed={1.4}
+        reducedMotion={reducedMotion}
       />
     </>
   )
