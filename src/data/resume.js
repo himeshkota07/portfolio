@@ -182,7 +182,7 @@ export const projects = [
       'Validated through simulation-based evaluation',
       'Demonstrated measurable reduction in average vehicle waiting time versus a fixed-cycle baseline',
     ],
-    link: 'https://github.com/himeshkota07',
+    link: 'https://github.com/himeshkota07/adaptive-traffic-control',
     featured: true,
   },
   {
