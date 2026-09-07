@@ -139,7 +139,7 @@ export const projects = [
   },
   {
     title: 'Kalike — Inclusive Learning Platform',
-    period: '2026',
+    period: '2025',
     tag: 'Personal Project',
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT'],
     description:
