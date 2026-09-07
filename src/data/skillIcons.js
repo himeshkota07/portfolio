@@ -26,8 +26,13 @@ import {
   SiExpress,
   SiFramer,
   SiI18Next,
+  SiFontawesome,
+  SiAxios,
+  SiSwagger,
+  SiUnsplash,
 } from 'react-icons/si'
 import { FaAws, FaJava } from 'react-icons/fa6'
+import { FiMail } from 'react-icons/fi'
 import {
   TbSql,
   TbBrain,
@@ -46,6 +51,7 @@ import {
   TbShieldCheck,
   TbPdf,
   TbLock,
+  TbLockSquareRounded,
 } from 'react-icons/tb'
 
 export const skillIcons = {
@@ -85,6 +91,8 @@ export const skillIcons = {
   jsPDF: { icon: TbPdf, color: 'var(--color-cyan)' },
   'Framer Motion': { icon: SiFramer, color: '#0055FF' },
   'react-i18next': { icon: SiI18Next, color: '#26A69A' },
+  FontAwesome: { icon: SiFontawesome, color: '#528DD7' },
+  Axios: { icon: SiAxios, color: '#5A29E4' },
 
   'AWS Lambda': { icon: FaAws, color: '#FF9900' },
   'API Gateway': { icon: TbApi, color: 'var(--color-cyan)' },
@@ -99,4 +107,8 @@ export const skillIcons = {
   'Node.js': { icon: SiNodedotjs, color: '#5FA04E' },
   Express: { icon: SiExpress, color: 'var(--color-text)' },
   bcrypt: { icon: TbLock, color: 'var(--color-cyan)' },
+  'crypto-js': { icon: TbLockSquareRounded, color: 'var(--color-violet)' },
+  Nodemailer: { icon: FiMail, color: 'var(--color-cyan)' },
+  Swagger: { icon: SiSwagger, color: '#85EA2D' },
+  'Unsplash API': { icon: SiUnsplash, color: 'var(--color-text)' },
 }

@@ -49,6 +49,8 @@ export const skills = {
     'jsPDF',
     'Framer Motion',
     'react-i18next',
+    'FontAwesome',
+    'Axios',
   ],
   'Cloud / Tools': [
     'AWS Lambda',
@@ -64,6 +66,10 @@ export const skills = {
     'Node.js',
     'Express',
     'bcrypt',
+    'crypto-js',
+    'Nodemailer',
+    'Swagger',
+    'Unsplash API',
   ],
 }
 
@@ -191,15 +197,19 @@ export const projects = [
     featured: false,
   },
   {
-    title: 'Graphical Password Authentication System',
+    title: 'GPA — Graphical Password Authentication',
     period: '2024',
     tag: 'Personal Project',
-    stack: ['Python', 'Security'],
+    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Unsplash API'],
     description:
-      'Image-based authentication system designed as a secure, user-friendly alternative to text passwords, built to resist common password attacks.',
-    highlights: [],
-    link: 'https://github.com/himeshkota07',
-    featured: false,
+      'Adds a second authentication factor to traditional alphanumeric passwords by letting users pick a personalized sequence of images (sourced via the Unsplash API) as an additional password layer — aimed at higher-security use cases like banking, e-commerce, or social media logins.',
+    highlights: [
+      'Client-side encryption (crypto-js) for the image-sequence password layer, with JWT auth and bcrypt-hashed credentials on the backend',
+      'Images sourced dynamically via the Unsplash API for a personalized, hard-to-guess visual sequence',
+    ],
+    link: 'https://github.com/himeshkota07/GPA',
+    liveLink: 'https://graphical-auth-client.vercel.app/',
+    featured: true,
   },
 ]
 
