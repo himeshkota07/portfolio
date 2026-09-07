@@ -95,6 +95,8 @@ function ProjectCard({ project, delay }) {
   )
 }
 
+const sortedProjects = [...projects].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+
 export default function Projects() {
   return (
     <section id="projects" className="relative px-6 py-28">
@@ -102,7 +104,7 @@ export default function Projects() {
         <SectionHeading index="04" title="Projects" subtitle="Selected builds — from hackathon wins to systems shipped solo." />
 
         <div className="grid sm:grid-cols-2 gap-6" style={{ perspective: 1200 }}>
-          {projects.map((project, i) => (
+          {sortedProjects.map((project, i) => (
             <ProjectCard key={project.title} project={project} delay={(i % 2) * 0.1} />
           ))}
         </div>

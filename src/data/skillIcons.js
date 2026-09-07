@@ -10,6 +10,17 @@ import {
   SiGit,
   SiGithub,
   SiJupyter,
+  SiTypescript,
+  SiLangchain,
+  SiMistralai,
+  SiOpencv,
+  SiReact,
+  SiNextdotjs,
+  SiVite,
+  SiReactrouter,
+  SiTailwindcss,
+  SiFastapi,
+  SiVercel,
 } from 'react-icons/si'
 import { FaAws, FaJava } from 'react-icons/fa6'
 import {
@@ -24,12 +35,18 @@ import {
   TbMathFunction,
   TbApi,
   TbNetwork,
+  TbBrandOpenai,
+  TbDatabase,
+  TbTextScan2,
+  TbShieldCheck,
+  TbPdf,
 } from 'react-icons/tb'
 
 export const skillIcons = {
   Python: { icon: SiPython, color: '#3776AB' },
   Java: { icon: FaJava, color: '#f89820' },
   SQL: { icon: TbSql, color: 'var(--color-cyan)' },
+  TypeScript: { icon: SiTypescript, color: '#3178C6' },
 
   'scikit-learn': { icon: SiScikitlearn, color: '#F7931E' },
   TensorFlow: { icon: SiTensorflow, color: '#FF6F00' },
@@ -39,6 +56,11 @@ export const skillIcons = {
   NLP: { icon: TbLanguage, color: 'var(--color-violet)' },
   'LLM APIs': { icon: TbMessageChatbot, color: 'var(--color-violet)' },
   'Predictive Modelling': { icon: TbChartDots3, color: 'var(--color-violet)' },
+  LangChain: { icon: SiLangchain, color: 'var(--color-cyan)' },
+  'OpenAI API': { icon: TbBrandOpenai, color: 'var(--color-text)' },
+  'Mistral AI': { icon: SiMistralai, color: '#FA520F' },
+  OpenCV: { icon: SiOpencv, color: '#5C3EE8' },
+  OCR: { icon: TbTextScan2, color: 'var(--color-violet)' },
 
   Pandas: { icon: SiPandas, color: 'var(--color-text)' },
   NumPy: { icon: SiNumpy, color: 'var(--color-text)' },
@@ -46,6 +68,14 @@ export const skillIcons = {
   Seaborn: { icon: TbChartAreaLine, color: 'var(--color-magenta)' },
   EDA: { icon: TbChartHistogram, color: 'var(--color-magenta)' },
   'Feature Engineering': { icon: TbMathFunction, color: 'var(--color-magenta)' },
+  ChromaDB: { icon: TbDatabase, color: 'var(--color-magenta)' },
+
+  React: { icon: SiReact, color: '#61DAFB' },
+  'Next.js': { icon: SiNextdotjs, color: 'var(--color-text)' },
+  Vite: { icon: SiVite, color: '#646CFF' },
+  'React Router': { icon: SiReactrouter, color: '#CA4245' },
+  'Tailwind CSS': { icon: SiTailwindcss, color: '#06B6D4' },
+  jsPDF: { icon: TbPdf, color: 'var(--color-cyan)' },
 
   'AWS Lambda': { icon: FaAws, color: '#FF9900' },
   'API Gateway': { icon: TbApi, color: 'var(--color-cyan)' },
@@ -54,4 +84,7 @@ export const skillIcons = {
   Git: { icon: SiGit, color: '#F05032' },
   GitHub: { icon: SiGithub, color: 'var(--color-text)' },
   Jupyter: { icon: SiJupyter, color: '#F37626' },
+  FastAPI: { icon: SiFastapi, color: '#009688' },
+  Vercel: { icon: SiVercel, color: 'var(--color-text)' },
+  Security: { icon: TbShieldCheck, color: 'var(--color-cyan)' },
 }

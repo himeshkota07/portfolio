@@ -23,7 +23,7 @@ export const profile = {
 }
 
 export const skills = {
-  Languages: ['Python', 'Java', 'SQL'],
+  Languages: ['Python', 'Java', 'SQL', 'TypeScript'],
   'ML / AI': [
     'scikit-learn',
     'TensorFlow',
@@ -33,9 +33,26 @@ export const skills = {
     'NLP',
     'LLM APIs',
     'Predictive Modelling',
+    'LangChain',
+    'OpenAI API',
+    'Mistral AI',
+    'OpenCV',
+    'OCR',
   ],
-  Data: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'EDA', 'Feature Engineering'],
-  'Cloud / Tools': ['AWS Lambda', 'API Gateway', 'REST APIs', 'JWT Auth', 'Git', 'GitHub', 'Jupyter'],
+  Data: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'EDA', 'Feature Engineering', 'ChromaDB'],
+  'Frontend / Web': ['React', 'Next.js', 'Vite', 'React Router', 'Tailwind CSS', 'jsPDF'],
+  'Cloud / Tools': [
+    'AWS Lambda',
+    'API Gateway',
+    'REST APIs',
+    'JWT Auth',
+    'Git',
+    'GitHub',
+    'Jupyter',
+    'FastAPI',
+    'Vercel',
+    'Security',
+  ],
 }
 
 export const softSkills = [

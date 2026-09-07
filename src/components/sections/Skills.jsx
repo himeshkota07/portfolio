@@ -1,4 +1,4 @@
-import { FiCode, FiCpu, FiDatabase, FiCloud } from 'react-icons/fi'
+import { FiCode, FiCpu, FiDatabase, FiCloud, FiLayout } from 'react-icons/fi'
 import Reveal from '../Reveal'
 import SectionHeading from '../SectionHeading'
 import { skills } from '../../data/resume'
@@ -8,6 +8,7 @@ const ICONS = {
   Languages: FiCode,
   'ML / AI': FiCpu,
   Data: FiDatabase,
+  'Frontend / Web': FiLayout,
   'Cloud / Tools': FiCloud,
 }
 
