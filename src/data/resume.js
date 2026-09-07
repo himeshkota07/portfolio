@@ -65,6 +65,50 @@ export const experience = [
 
 export const projects = [
   {
+    title: 'ResearchPilot AI',
+    period: '2026',
+    tag: 'Personal Project',
+    stack: ['React', 'FastAPI', 'LangChain', 'Mistral AI', 'ChromaDB'],
+    description:
+      'Multi-agent AI research assistant — upload a research paper PDF and it automatically generates a structured summary, identifies research gaps and future directions, drafts a full analysis report, and lets you chat with the paper via RAG-grounded Q&A.',
+    highlights: [
+      'Multi-agent pipeline for summarisation, gap analysis, and report generation using LangChain and Mistral AI (open-mistral-7b)',
+      'RAG-grounded chat over the paper via Mistral embeddings (mistral-embed) and a ChromaDB vector store',
+    ],
+    link: 'https://github.com/himeshkota07/ResearchPilot-AI',
+    liveLink: 'https://researchpilot-wp6b.onrender.com',
+    featured: true,
+  },
+  {
+    title: 'ClaimReady',
+    period: '2026',
+    tag: 'Personal Project',
+    stack: ['Next.js', 'TypeScript', 'OpenAI API', 'Tailwind CSS', 'Vercel'],
+    description:
+      'A pre-flight check for EPFO Provident Fund withdrawal claims — moves validation from after submission (a 15–20 day wait ending in a cryptic one-line rejection) to before it, so citizens know exactly what will fail and how to fix it before they file.',
+    highlights: [
+      'Deterministic rules engine for name-matching, KYC checks, and form eligibility, paired with an OpenAI model for judgment-based tasks like decoding rejection text and reading uploaded documents',
+      'Drafts grievance letters in English, Hindi, or Kannada from vision-parsed documents',
+    ],
+    link: 'https://github.com/himeshkota07/claimready',
+    liveLink: 'https://claimready-epfo.vercel.app',
+    featured: true,
+  },
+  {
+    title: 'Dayflow',
+    period: '2026',
+    tag: 'Personal Project',
+    stack: ['React', 'TypeScript', 'Vite', 'React Router', 'jsPDF'],
+    description:
+      'Front-end-only HR management system for companies of 150–2,000 people, with Employee and HR Admin roles covering attendance, leave, payroll (with PDF slips), reports, and an employee directory — built around a signature "day-arc" time visualization.',
+    highlights: [
+      'No backend — state persists via a small observable store over localStorage',
+      '89 Vitest tests, hand-written CSS design system with no UI framework',
+    ],
+    link: 'https://github.com/himeshkota07/AI_Avengers',
+    featured: false,
+  },
+  {
     title: 'Bank Statement Extraction & CoA Mapping',
     period: '2026',
     tag: 'Agentica-2.0 — 1st Place, IIIT SriCity',
