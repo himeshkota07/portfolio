@@ -21,6 +21,11 @@ import {
   SiTailwindcss,
   SiFastapi,
   SiVercel,
+  SiMongodb,
+  SiNodedotjs,
+  SiExpress,
+  SiFramer,
+  SiI18Next,
 } from 'react-icons/si'
 import { FaAws, FaJava } from 'react-icons/fa6'
 import {
@@ -40,6 +45,7 @@ import {
   TbTextScan2,
   TbShieldCheck,
   TbPdf,
+  TbLock,
 } from 'react-icons/tb'
 
 export const skillIcons = {
@@ -69,6 +75,7 @@ export const skillIcons = {
   EDA: { icon: TbChartHistogram, color: 'var(--color-magenta)' },
   'Feature Engineering': { icon: TbMathFunction, color: 'var(--color-magenta)' },
   ChromaDB: { icon: TbDatabase, color: 'var(--color-magenta)' },
+  MongoDB: { icon: SiMongodb, color: '#47A248' },
 
   React: { icon: SiReact, color: '#61DAFB' },
   'Next.js': { icon: SiNextdotjs, color: 'var(--color-text)' },
@@ -76,6 +83,8 @@ export const skillIcons = {
   'React Router': { icon: SiReactrouter, color: '#CA4245' },
   'Tailwind CSS': { icon: SiTailwindcss, color: '#06B6D4' },
   jsPDF: { icon: TbPdf, color: 'var(--color-cyan)' },
+  'Framer Motion': { icon: SiFramer, color: '#0055FF' },
+  'react-i18next': { icon: SiI18Next, color: '#26A69A' },
 
   'AWS Lambda': { icon: FaAws, color: '#FF9900' },
   'API Gateway': { icon: TbApi, color: 'var(--color-cyan)' },
@@ -87,4 +96,7 @@ export const skillIcons = {
   FastAPI: { icon: SiFastapi, color: '#009688' },
   Vercel: { icon: SiVercel, color: 'var(--color-text)' },
   Security: { icon: TbShieldCheck, color: 'var(--color-cyan)' },
+  'Node.js': { icon: SiNodedotjs, color: '#5FA04E' },
+  Express: { icon: SiExpress, color: 'var(--color-text)' },
+  bcrypt: { icon: TbLock, color: 'var(--color-cyan)' },
 }

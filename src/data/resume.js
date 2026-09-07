@@ -39,8 +39,17 @@ export const skills = {
     'OpenCV',
     'OCR',
   ],
-  Data: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'EDA', 'Feature Engineering', 'ChromaDB'],
-  'Frontend / Web': ['React', 'Next.js', 'Vite', 'React Router', 'Tailwind CSS', 'jsPDF'],
+  Data: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'EDA', 'Feature Engineering', 'ChromaDB', 'MongoDB'],
+  'Frontend / Web': [
+    'React',
+    'Next.js',
+    'Vite',
+    'React Router',
+    'Tailwind CSS',
+    'jsPDF',
+    'Framer Motion',
+    'react-i18next',
+  ],
   'Cloud / Tools': [
     'AWS Lambda',
     'API Gateway',
@@ -52,6 +61,9 @@ export const skills = {
     'FastAPI',
     'Vercel',
     'Security',
+    'Node.js',
+    'Express',
+    'bcrypt',
   ],
 }
 
@@ -123,6 +135,20 @@ export const projects = [
       '89 Vitest tests, hand-written CSS design system with no UI framework',
     ],
     link: 'https://github.com/himeshkota07/AI_Avengers',
+    featured: false,
+  },
+  {
+    title: 'Kalike — Inclusive Learning Platform',
+    period: '2026',
+    tag: 'Personal Project',
+    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT'],
+    description:
+      'Full-stack MERN web app for delivering bilingual (Kannada/English) audio and video lessons to primary-school children, with role-based dashboards for students, teachers, and admins.',
+    highlights: [
+      'JWT-authenticated role-based dashboards for students, teachers, and admins, with teacher content upload',
+      'i18n language switching between Kannada and English via react-i18next',
+    ],
+    link: 'https://github.com/himeshkota07/inclusive-learning-platform',
     featured: false,
   },
   {
