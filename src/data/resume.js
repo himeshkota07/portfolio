@@ -193,7 +193,7 @@ export const projects = [
     description:
       'Conversational chatbot deployed on AWS Lambda and API Gateway, demonstrating end-to-end serverless architecture, REST API integration, and cloud deployment.',
     highlights: [],
-    link: 'https://github.com/himeshkota07',
+    link: 'https://github.com/himeshkota07/Serverless-Chatbot',
     featured: false,
   },
   {
